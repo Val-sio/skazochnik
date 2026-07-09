@@ -1,1 +1,310 @@
 
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сказочник - Волшебные истории</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--night:#08051a;--deep:#110830;--card:#fffdf7;--ink:#1a1030;--gold:#d4a843;--gold2:#f0c96a;--lav:#9b7fe8;--rose:#e8799b;--mint:#6fd4b0;--muted:#7a6e9a;--border:rgba(212,168,67,.2)}
+html,body{min-height:100vh}
+body{background:var(--night);font-family:'Raleway',sans-serif;color:var(--ink);overflow-x:hidden}
+.cosmos{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse 120% 80% at 15% 0%,rgba(80,30,160,.5) 0%,transparent 55%),radial-gradient(ellipse 80% 60% at 85% 100%,rgba(140,40,100,.4) 0%,transparent 55%),var(--night)}
+.star-field{position:fixed;inset:0;z-index:0;pointer-events:none}
+.s{position:absolute;border-radius:50%;background:white;animation:blink var(--d,4s) ease-in-out infinite;animation-delay:var(--dl,0s);opacity:0}
+@keyframes blink{0%,100%{opacity:0;transform:scale(1)}50%{opacity:var(--op,.6);transform:scale(1.3)}}
+.nebula{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;animation:drift var(--nd,20s) ease-in-out infinite alternate}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(var(--dx,20px),var(--dy,-20px)) scale(1.1)}}
+.meteor{position:fixed;top:20%;left:-5%;width:120px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.8),transparent);animation:meteor 12s linear infinite;animation-delay:5s;pointer-events:none;z-index:0;transform:rotate(-15deg)}
+@keyframes meteor{0%{left:-15%;top:20%;opacity:0}3%{opacity:1}20%{left:115%;top:50%;opacity:0}100%{left:115%;top:50%;opacity:0}}
+.app{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:56px 16px 80px}
+.header{text-align:center;margin-bottom:52px}
+.header-ornament{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:24px}
+.orn-line{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold));opacity:.6}
+.orn-line.r{background:linear-gradient(90deg,var(--gold),transparent)}
+.orn-star{font-size:18px;animation:spinSlow 20s linear infinite}
+@keyframes spinSlow{to{transform:rotate(360deg)}}
+.main-title{font-family:'Cormorant Garamond',serif;font-size:clamp(52px,10vw,96px);font-weight:300;line-height:.95;color:white}
+.main-title .word1{display:block;color:var(--gold2);text-shadow:0 0 60px rgba(240,201,106,.3)}
+.main-title .word2{display:block;font-style:italic;color:rgba(255,255,255,.85)}
+.header-tagline{margin-top:20px;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35)}
+.header-divider{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:28px}
+.hdiv-line{width:80px;height:1px;background:var(--border)}
+.hdiv-gem{width:6px;height:6px;background:var(--gold);transform:rotate(45deg)}
+.wizard{width:100%;max-width:640px;background:var(--card);border-radius:32px;overflow:hidden;box-shadow:0 0 0 1px rgba(212,168,67,.15),0 40px 80px rgba(0,0,0,.5);position:relative}
+.wizard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--lav),var(--gold),var(--rose),var(--gold),var(--lav));background-size:200% 100%;animation:shimmer 4s linear infinite}
+@keyframes shimmer{0%{background-position:0% 0%}100%{background-position:200% 0%}}
+.wizard-inner{padding:40px 36px 36px}
+.progress{margin-bottom:36px}
+.prog-track{height:3px;background:#ede8ff;border-radius:3px;overflow:hidden;margin-bottom:14px}
+.prog-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--lav),var(--gold));transition:width .6s}
+.prog-steps{display:flex;justify-content:space-between}
+.prog-step{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#ccc8e0;transition:color .3s}
+.prog-step.on{color:var(--lav)}
+.prog-step.done{color:var(--mint)}
+.panel{display:none}
+.panel.on{display:block;animation:panelIn .5s}
+@keyframes panelIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.step-chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--border);border-radius:50px;padding:5px 14px;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);background:rgba(212,168,67,.06);margin-bottom:14px}
+.step-chip .chip-dot{width:5px;height:5px;border-radius:50%;background:var(--gold)}
+.ptitle{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--ink);margin-bottom:26px}
+.ptitle em{font-style:italic;color:var(--lav)}
+.upzone{border:2px dashed rgba(155,127,232,.3);border-radius:20px;padding:36px 20px;text-align:center;cursor:pointer;transition:all .35s;background:linear-gradient(135deg,#faf8ff,#f5f0fe);position:relative}
+.upzone:hover{border-color:var(--lav);background:linear-gradient(135deg,#f2eeff,#ece4ff)}
+.upzone input[type="file"]{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.up-em{font-size:40px;display:block;margin-bottom:10px;animation:bob 3s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.up-main{font-size:15px;font-weight:700;color:#5030a0;margin-bottom:4px}
+.up-sub{font-size:12px;color:#9080b8}
+.prev-wrap{display:none;text-align:center}
+.prev-wrap img{width:110px;height:110px;object-fit:cover;border-radius:50%;border:3px solid var(--gold);box-shadow:0 0 0 6px rgba(212,168,67,.1),0 8px 24px rgba(0,0,0,.15)}
+.chbtn{display:block;margin-top:8px;font-size:12px;color:var(--muted);cursor:pointer;text-decoration:underline;background:none;border:none;font-family:'Raleway',sans-serif}
+.field{margin-bottom:18px}
+.flabel{display:block;font-size:10px;font-weight:700;color:var(--muted);margin-bottom:8px;letter-spacing:.14em;text-transform:uppercase}
+.finput{width:100%;padding:13px 18px;border:1.5px solid #e8e0f8;border-radius:14px;font-family:'Raleway',sans-serif;font-size:15px;font-weight:600;color:var(--ink);background:#faf8ff;outline:none;transition:all .3s}
+.finput:focus{border-color:var(--lav);box-shadow:0 0 0 4px rgba(155,127,232,.08);background:white}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{padding:8px 16px;border:1.5px solid #e8e0f8;border-radius:50px;cursor:pointer;background:#faf8ff;font-family:'Raleway',sans-serif;font-size:13px;font-weight:600;color:var(--muted);transition:all .25s}
+.pill:hover{border-color:var(--lav);color:#5030a0;background:#f0e8ff}
+.pill.sel{border-color:var(--lav);background:linear-gradient(135deg,rgba(155,127,232,.12),rgba(155,127,232,.06));color:#5030a0;box-shadow:0 0 0 3px rgba(155,127,232,.1)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.gc{padding:16px 8px;border:1.5px solid #e8e0f8;border-radius:16px;text-align:center;cursor:pointer;background:#faf8ff;transition:all .3s}
+.gc:hover{border-color:var(--lav);transform:translateY(-3px);box-shadow:0 8px 20px rgba(155,127,232,.15)}
+.gc.sel{border-color:var(--gold);background:linear-gradient(135deg,#fffbef,#fff8e4);box-shadow:0 0 0 3px rgba(212,168,67,.12)}
+.gc .ge{font-size:26px;display:block;margin-bottom:6px}
+.gc .gn{font-size:10px;font-weight:700;color:#3a2a6a}
+.tip{background:linear-gradient(135deg,#fffbef,#fff8e2);border:1px solid rgba(212,168,67,.25);border-radius:14px;padding:12px 16px;font-size:12px;color:#7a6030;margin-top:16px;display:flex;gap:10px;align-items:flex-start}
+.err{display:none;background:#fff2f4;border:1px solid rgba(232,121,155,.3);border-radius:12px;padding:12px 16px;font-size:13px;color:#a03050;margin-top:14px;text-align:center;font-weight:600}
+.err.on{display:block}
+.bnav{display:flex;justify-content:space-between;align-items:center;margin-top:24px;gap:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border:none;border-radius:50px;font-family:'Raleway',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .3s}
+.btn-main{background:linear-gradient(135deg,#7040d0,#b040a0);color:white;width:100%;margin-top:12px;box-shadow:0 8px 24px rgba(112,64,208,.3)}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(112,64,208,.45)}
+.btn-back{background:none;color:var(--muted);font-size:13px;padding:10px 16px}
+.btn-back:hover{color:var(--ink);background:#f5f0ff;border-radius:50px}
+.btn-next{background:linear-gradient(135deg,#7040d0,#b040a0);color:white;padding:14px 32px;box-shadow:0 6px 20px rgba(112,64,208,.3)}
+.btn-next:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(112,64,208,.45)}
+.loader{display:none;text-align:center;padding:20px 0}
+.loader.on{display:block}
+.magic-circle{position:relative;width:110px;height:110px;margin:0 auto 32px}
+.mc-ring{position:absolute;border-radius:50%;border:2px solid transparent;animation:spin var(--spd,2s) linear infinite}
+.mc-ring:nth-child(1){inset:0;border-top-color:var(--lav)}
+.mc-ring:nth-child(2){inset:16px;border-top-color:var(--gold);animation-direction:reverse;--spd:3s}
+.mc-ring:nth-child(3){inset:32px;border-top-color:var(--rose);--spd:1.5s}
+.mc-center{position:absolute;inset:42px;display:flex;align-items:center;justify-content:center;font-size:24px;animation:pulse 2s ease-in-out infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.2);opacity:1}}
+.loader-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.loader-sub{font-size:12px;color:var(--muted);margin-bottom:28px}
+.loader-steps{display:flex;flex-direction:column;gap:14px;max-width:220px;margin:0 auto;text-align:left}
+.ls{display:flex;align-items:center;gap:12px;font-size:13px;color:#c0b8d8;transition:all .4s;font-weight:600}
+.ls-dot{width:30px;height:30px;border-radius:50%;background:#f0ecff;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .4s}
+.ls.act{color:var(--ink)}
+.ls.act .ls-dot{background:linear-gradient(135deg,rgba(155,127,232,.3),rgba(212,168,67,.2));animation:pulse 1.2s infinite}
+.ls.done .ls-dot{background:#d8f8ec}
+.ls.done{color:#409870}
+.result{width:100%;max-width:680px;margin-top:28px;display:none}
+.result.on{display:block;animation:panelIn .7s}
+.book{border-radius:28px;padding:52px 32px 40px;text-align:center;margin-bottom:16px;background:radial-gradient(ellipse 100% 80% at 30% 20%,rgba(80,30,160,.8),transparent 60%),radial-gradient(ellipse 80% 60% at 70% 80%,rgba(140,40,100,.6),transparent 60%),var(--deep);position:relative;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.5)}
+.book-stars{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.bs{position:absolute;background:white;border-radius:50%;opacity:.5;animation:blink var(--d,3s) ease-in-out infinite}
+.book::after{content:'';position:absolute;inset:16px;border:1px solid rgba(212,168,67,.2);border-radius:16px;pointer-events:none}
+.book-moon{font-size:64px;display:block;margin-bottom:16px;animation:moonFloat 4s ease-in-out infinite;filter:drop-shadow(0 0 24px rgba(240,201,106,.6))}
+@keyframes moonFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.book-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,5vw,38px);font-weight:600;color:var(--gold2);line-height:1.2;margin-bottom:16px;text-shadow:0 2px 24px rgba(0,0,0,.6);font-style:italic}
+.book-tags{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.book-tag{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:50px;padding:5px 13px;font-size:11px;color:rgba(255,255,255,.7);font-weight:600}
+.hero-photo{text-align:center;margin:0 0 16px;padding:28px;background:var(--card);border-radius:24px;border:1px solid var(--border)}
+.hero-photo-title{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.hero-photo img{width:130px;height:130px;object-fit:cover;border-radius:50%;border:4px solid var(--gold);box-shadow:0 0 0 8px rgba(212,168,67,.08),0 12px 32px rgba(0,0,0,.15);animation:moonFloat 4s ease-in-out infinite}
+.hero-name{margin-top:10px;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--ink)}
+.tale-page{background:var(--card);border-radius:24px;padding:40px 36px;box-shadow:0 8px 32px rgba(0,0,0,.06);border:1px solid rgba(212,168,67,.1);position:relative}
+.tale-page::before{content:'✦';position:absolute;top:18px;right:22px;font-size:14px;color:rgba(212,168,67,.3)}
+.tale-page::after{content:'✦';position:absolute;bottom:18px;left:22px;font-size:14px;color:rgba(212,168,67,.3)}
+.tbody{font-family:'Cormorant Garamond',serif;font-size:18px;line-height:2;color:#1a1030}
+.tbody p{margin-bottom:18px}
+.tale-actions{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
+.tact{flex:1;min-width:100px;padding:14px 16px;border:1.5px solid #e8e0f8;border-radius:16px;background:var(--card);font-family:'Raleway',sans-serif;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:7px}
+.tact:hover{border-color:var(--lav);background:#f5f0ff;color:#5030a0}
+.tact.hi{background:linear-gradient(135deg,#7040d0,#b040a0);border-color:transparent;color:white;box-shadow:0 6px 20px rgba(112,64,208,.3)}
+.tact.hi:hover{box-shadow:0 10px 28px rgba(112,64,208,.5)}
+@media(max-width:480px){.wizard-inner{padding:28px 20px}.grid3{grid-template-columns:repeat(2,1fr)}.tale-page{padding:28px 20px}.tale-actions{flex-direction:column}.main-title{font-size:clamp(44px,12vw,64px)}}
+</style>
+</head>
+<body>
+<div class="cosmos"></div>
+<div class="star-field" id="sf"></div>
+<div class="meteor"></div>
+<div class="nebula" style="width:400px;height:400px;top:-100px;left:-100px;background:rgba(80,30,160,.25);--nd:18s;--dx:30px;--dy:20px"></div>
+<div class="nebula" style="width:300px;height:300px;bottom:-80px;right:-60px;background:rgba(160,40,100,.2);--nd:25s;--dx:-20px;--dy:-30px"></div>
+<div class="nebula" style="width:200px;height:200px;top:40%;left:60%;background:rgba(60,20,140,.3);--nd:15s;--dx:15px;--dy:25px"></div>
+<div class="app">
+  <div class="header">
+    <div class="header-ornament"><div class="orn-line"></div><span class="orn-star">✦</span><div class="orn-line r"></div></div>
+    <h1 class="main-title"><span class="word1">Сказочник</span><span class="word2">волшебные истории</span></h1>
+    <p class="header-tagline">Персональная сказка для вашего ребёнка</p>
+    <div class="header-divider"><div class="hdiv-line"></div><div class="hdiv-gem"></div><div class="hdiv-line"></div></div>
+  </div>
+  <div class="wizard" id="mainCard">
+    <div class="wizard-inner">
+      <div class="progress">
+        <div class="prog-track"><div class="prog-fill" id="progFill" style="width:25%"></div></div>
+        <div class="prog-steps">
+          <span class="prog-step on" id="ps0">Герой</span>
+          <span class="prog-step" id="ps1">Стиль</span>
+          <span class="prog-step" id="ps2">Тема</span>
+          <span class="prog-step" id="ps3">Финал</span>
+        </div>
+      </div>
+      <div class="panel on" id="p0">
+        <div class="step-chip"><span class="chip-dot"></span>Шаг 1 из 4</div>
+        <h2 class="ptitle">Кто станет <em>героем</em>?</h2>
+        <div class="upzone" id="upzone">
+          <input type="file" id="photoIn" accept="image/*">
+          <span class="up-em"></span>
+          <div class="up-main">Загрузите фото ребёнка</div>
+          <div class="up-sub">Необязательно, но сказка станет ещё личнее</div>
+        </div>
+        <div class="prev-wrap" id="prevWrap">
+          <img id="prevImg" src="" alt="">
+          <button class="chbtn" onclick="chPhoto()">Изменить фото</button>
+        </div>
+        <div class="field" style="margin-top:20px">
+          <label class="flabel">Имя ребёнка</label>
+          <input class="finput" id="cname" type="text" placeholder="Маша, Ваня, Соня…" maxlength="30">
+        </div>
+        <div class="field">
+          <label class="flabel">Возраст</label>
+          <div class="pills" id="ageRow">
+            <button class="pill" onclick="pick('#ageRow',this,'2-4 года',false)">2-4 года</button>
+            <button class="pill" onclick="pick('#ageRow',this,'5-7 лет',false)">5-7 лет</button>
+            <button class="pill" onclick="pick('#ageRow',this,'8-10 лет',false)">8-10 лет</button>
+            <button class="pill" onclick="pick('#ageRow',this,'11-13 лет',false)">11-13 лет</button>
+          </div>
+        </div>
+        <div class="err" id="err0">Пожалуйста, введите имя ребёнка</div>
+        <div class="bnav"><div></div><button class="btn btn-next" onclick="nextStep(1)">Далее →</button></div>
+      </div>
+      <div class="panel" id="p1">
+        <div class="step-chip"><span class="chip-dot"></span>Шаг 2 из 4</div>
+        <h2 class="ptitle">Выберите <em>стиль</em> сказки</h2>
+        <div class="grid3">
+          <div class="gc" onclick="pick('.gc',this,'classic',true)"><span class="ge">🏰</span><span class="gn">Классическая</span></div>
+          <div class="gc" onclick="pick('.gc',this,'adventure',true)"><span class="ge">⚔️</span><span class="gn">Приключения</span></div>
+          <div class="gc" onclick="pick('.gc',this,'fantasy',true)"><span class="ge">🐉</span><span class="gn">Фэнтези</span></div>
+          <div class="gc" onclick="pick('.gc',this,'magic',true)"><span class="ge">✨</span><span class="gn">Волшебная</span></div>
+          <div class="gc" onclick="pick('.gc',this,'animal',true)"><span class="ge">🦊</span><span class="gn">О животных</span></div>
+          <div class="gc" onclick="pick('.gc',this,'space',true)"><span class="ge">🚀</span><span class="gn">Космос</span></div>
+        </div>
+        <div class="tip"><span>💡</span><span>Каждый стиль создаёт уникальную атмосферу</span></div>
+        <div class="err" id="err1">Выберите стиль сказки</div>
+        <div class="bnav">
+          <button class="btn btn-back" onclick="backStep(0)">← Назад</button>
+          <button class="btn btn-next" onclick="nextStep(2)">Далее →</button>
+        </div>
+      </div>
+      <div class="panel" id="p2">
+        <div class="step-chip"><span class="chip-dot"></span>Шаг 3 из 4</div>
+        <h2 class="ptitle">Выберите <em>тему</em> истории</h2>
+        <div class="field">
+          <label class="flabel">Основная тема</label>
+          <div class="pills" id="themeRow">
+            <button class="pill" onclick="pick('#themeRow',this,'friendship',false)">Дружба</button>
+            <button class="pill" onclick="pick('#themeRow',this,'courage',false)">Смелость</button>
+            <button class="pill" onclick="pick('#themeRow',this,'kindness',false)">Доброта</button>
+            <button class="pill" onclick="pick('#themeRow',this,'dream',false)">Мечта</button>
+            <button class="pill" onclick="pick('#themeRow',this,'family',false)">Семья</button>
+            <button class="pill" onclick="pick('#themeRow',this,'nature',false)">Природа</button>
+          </div>
+        </div>
+        <div class="field">
+          <label class="flabel">Дополнительные пожелания</label>
+          <input class="finput" id="wishes" type="text" placeholder="Например: добавить дракона..." maxlength="150">
+        </div>
+        <div class="err" id="err2">Выберите тему сказки</div>
+        <div class="bnav">
+          <button class="btn btn-back" onclick="backStep(1)">← Назад</button>
+          <button class="btn btn-next" onclick="nextStep(3)">Далее →</button>
+        </div>
+      </div>
+      <div class="panel" id="p3">
+        <div class="step-chip"><span class="chip-dot"></span>Шаг 4 из 4</div>
+        <h2 class="ptitle">Как закончится <em>сказка</em>?</h2>
+        <div class="grid3">
+          <div class="gc" onclick="pick('.gc',this,'happy',true)"><span class="ge">🌈</span><span class="gn">Счастливый</span></div>
+          <div class="gc" onclick="pick('.gc',this,'moral',true)"><span class="ge">📚</span><span class="gn">Поучительный</span></div>
+          <div class="gc" onclick="pick('.gc',this,'surprise',true)"><span class="ge"></span><span class="gn">С сюрпризом</span></div>
+        </div>
+        <div class="field" style="margin-top:20px">
+          <label class="flabel">🔑 API ключ OpenRouter</label>
+          <input class="finput" id="apiKey" type="password" placeholder="sk-or-..." maxlength="200">
+          <div style="font-size:11px;color:#7a6030;margin-top:8px">
+            Получите ключ на <a href="https://openrouter.ai/keys" target="_blank" style="color:#5030a0">openrouter.ai/keys</a>
+          </div>
+        </div>
+        <div class="err" id="err3">Выберите финал и введите API ключ</div>
+        <div class="bnav">
+          <button class="btn btn-back" onclick="backStep(2)">← Назад</button>
+          <button class="btn btn-main" onclick="generateTale()">✨ Создать сказку</button>
+        </div>
+      </div>
+      <div class="loader" id="loader">
+        <div class="magic-circle">
+          <div class="mc-ring"></div>
+          <div class="mc-ring"></div>
+          <div class="mc-ring"></div>
+          <div class="mc-center">📖</div>
+        </div>
+        <div class="loader-title">Создаём волшебную историю...</div>
+        <div class="loader-sub">Это займёт около минуты</div>
+        <div class="loader-steps">
+          <div class="ls" id="ls0"><div class="ls-dot">✦</div><span>Анализируем героя</span></div>
+          <div class="ls" id="ls1"><div class="ls-dot">✦</div><span>Подбираем стиль</span></div>
+          <div class="ls" id="ls2"><div class="ls-dot">✦</div><span>Пишем сказку</span></div>
+          <div class="ls" id="ls3"><div class="ls-dot"></div><span>Добавляем магию</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="result" id="result">
+    <div class="book" id="book">
+      <div class="book-stars" id="bookStars"></div>
+      <span class="book-moon">🌙</span>
+      <div class="book-title" id="bookTitle">Ваша сказка готова!</div>
+      <div class="book-tags" id="bookTags"></div>
+    </div>
+    <div class="hero-photo" id="heroPhoto" style="display:none">
+      <div class="hero-photo-title">Герой истории</div>
+      <img id="heroImg" src="" alt="">
+      <div class="hero-name" id="heroName"></div>
+    </div>
+    <div class="tale-page">
+      <div class="tbody" id="taleBody"></div>
+    </div>
+    <div class="tale-actions">
+      <button class="tact" onclick="location.reload()">🔄 Новая сказка</button>
+      <button class="tact hi" onclick="printTale()">🖨️ Печать / PDF</button>
+      <button class="tact" onclick="copyTale()"> Копировать</button>
+    </div>
+  </div>
+</div>
+<script>
+let step=0;
+const data={photo:null,name:'',age:'',style:'',theme:'',wishes:'',ending:'',apiKey:''};
+function initStars(){const sf=document.getElementById('sf');for(let i=0;i<80;i++){const s=document.createElement('div');s.className='s';const size=Math.random()*3+1;s.style.width=size+'px';s.style.height=size+'px';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.setProperty('--d',(Math.random()*4+3)+'s');s.style.setProperty('--dl',(Math.random()*5)+'s');s.style.setProperty('--op',Math.random()*0.6+0.2);sf.appendChild(s)}}
+document.getElementById('photoIn').addEventListener('change',function(e){const file=e.target.files[0];if(file){const reader=new FileReader();reader.onload=function(ev){data.photo=ev.target.result;document.getElementById('prevImg').src=data.photo;document.getElementById('upzone').style.display='none';document.getElementById('prevWrap').style.display='block'};reader.readAsDataURL(file)}});
+function chPhoto(){document.getElementById('photoIn').click()}
+function pick(selector,el,value,exclusive){if(exclusive){document.querySelectorAll(selector).forEach(x=>x.classList.remove('sel'));el.classList.add('sel')}else{const parent=document.querySelector(selector);parent.querySelectorAll('.pill').forEach(x=>x.classList.remove('sel'));el.classList.add('sel')}if(selector==='.gc'){if(step===1)data.style=value;else if(step===3)data.ending=value}else if(selector==='#ageRow')data.age=value;else if(selector==='#themeRow')data.theme=value}
+function updateProgress(){const pct=[25,50,75,100][step];document.getElementById('progFill').style.width=pct+'%';for(let i=0;i<4;i++){const ps=document.getElementById('ps'+i);ps.classList.remove('on','done');if(i<step)ps.classList.add('done');else if(i===step)ps.classList.add('on')}}
+function showPanel(n){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));document.getElementById('p'+n).classList.add('on');step=n;updateProgress()}
+function nextStep(n){if(step===0){data.name=document.getElementById('cname').value.trim();if(!data.name){document.getElementById('err0').classList.add('on');setTimeout(()=>document.getElementById('err0').classList.remove('on'),3000);return}if(!data.age){document.getElementById('err0').textContent='Выберите возраст';document.getElementById('err0').classList.add('on');setTimeout(()=>{document.getElementById('err0').classList.remove('on');document.getElementById('err0').textContent='Пожалуйста, введите имя ребёнка'},3000);return}}else if(step===1){if(!data.style){document.getElementById('err1').classList.add('on');setTimeout(()=>document.getElementById('err1').classList.remove('on'),3000);return}}else if(step===2){if(!data.theme){document.getElementById('err2').classList.add('on');setTimeout(()=>document.getElementById('err2').classList.remove('on'),3000);return}data.wishes=document.getElementById('wishes').value.trim()}showPanel(n)}
+function backStep(n){showPanel(n)}
+async function generateTale(){if(!data.ending){document.getElementById('err3').classList.add('on');setTimeout(()=>document.getElementById('err3').classList.remove('on'),3000);return}data.apiKey=document.getElementById('apiKey').value.trim();if(!data.apiKey){document.getElementById('err3').textContent='Введите API ключ OpenRouter';document.getElementById('err3').classList.add('on');setTimeout(()=>{document.getElementById('err3').classList.remove('on');document.getElementById('err3').textContent='Выберите финал и введите API ключ'},3000);return}localStorage.setItem('sk_api_key',data.apiKey);document.getElementById('mainCard').style.display='none';document.getElementById('loader').classList.add('on');setTimeout(()=>document.getElementById('ls0').classList.add('act'),200);setTimeout(()=>{document.getElementById('ls0').classList.add('done');document.getElementById('ls1').classList.add('act')},800);setTimeout(()=>{document.getElementById('ls1').classList.add('done');document.getElementById('ls2').classList.add('act')},1500);setTimeout(()=>{document.getElementById('ls2').classList.add('done');document.getElementById('ls3').classList.add('act')},4000);try{const styleNames={'classic':'классическая русская сказка','adventure':'приключенческая история','fantasy':'фэнтези','magic':'волшебная сказка','animal':'сказка о животных','space':'космическая история'};const endingNames={'happy':'счастливый','moral':'поучительный с мудрым выводом','surprise':'неожиданный с сюрпризом'};const prompt=`Создай добрую детскую сказку на русском языке.\n\nГерой: ${data.name}, возраст ${data.age}\nСтиль: ${styleNames[data.style]||data.style}\nТема: ${data.theme}\nФинал: ${endingNames[data.ending]||data.ending}\n${data.wishes?'Пожелания: '+data.wishes:''}\n\nТребования:\n- Сказка должна быть подходящей для ребёнка ${data.age}\n- Используй волшебные, добрые образы\n- Объем: 400-600 слов\n- Раздели на 3-4 главы\n- Добавь мораль или добрый урок\n- Пиши красивым литературным языком`;const response=await fetch('https://openrouter.ai/api/v1/chat/completions',{method:'POST',headers:{'Authorization':`Bearer ${data.apiKey}`,'Content-Type':'application/json','HTTP-Referer':window.location.href,'X-Title':'Skazochnik'},body:JSON.stringify({model:'qwen/qwen-1.5-7b-chat',messages:[{role:'system',content:'Ты талантливый детский писатель, создаёшь добрые волшебные сказки для детей. Пишешь на русском языке красиво и образно.'},{role:'user',content:prompt}],temperature:0.8,max_tokens:2000})});if(!response.ok){const err=await response.text();throw new Error('Ошибка API: '+response.status+' - '+err)}const result=await response.json();const tale=result.choices[0].message.content;document.getElementById('loader').classList.remove('on');document.getElementById('result').classList.add('on');document.getElementById('bookTitle').textContent=`Сказка про ${data.name}`;const tags=document.getElementById('bookTags');tags.innerHTML=`<div class="book-tag"> ${styleNames[data.style]}</div><div class="book-tag">🌟 ${data.theme}</div><div class="book-tag">✨ ${endingNames[data.ending]}</div><div class="book-tag"> ${data.age}</div>`;if(data.photo){document.getElementById('heroPhoto').style.display='block';document.getElementById('heroImg').src=data.photo;document.getElementById('heroName').textContent=data.name}document.getElementById('taleBody').innerHTML='<p>'+tale.split('\n\n').filter(p=>p.trim()).join('</p><p>')+'</p>';const container=document.getElementById('bookStars');for(let i=0;i<30;i++){const s=document.createElement('div');s.className='bs';const size=Math.random()*3+1;s.style.width=size+'px';s.style.height=size+'px';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.setProperty('--d',(Math.random()*3+2)+'s');s.style.setProperty('--dl',(Math.random()*3)+'s');container.appendChild(s)}}catch(error){console.error('Generation error:',error);document.getElementById('loader').classList.remove('on');document.getElementById('mainCard').style.display='block';alert('Ошибка при создании сказки: '+error.message)}}
+function printTale(){window.print()}
+function copyTale(){const text=document.getElementById('taleBody').innerText;navigator.clipboard.writeText(text).then(()=>{alert('Сказка скопирована в буфер обмена!')})}
+window.addEventListener('load',()=>{const savedKey=localStorage.getItem('sk_api_key');if(savedKey)document.getElementById('apiKey').value=savedKey;initStars()});
+</script>
+</body>
+</html>
