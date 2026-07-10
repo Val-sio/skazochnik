@@ -753,11 +753,14 @@ function selectDetail(detail, element) {
   element.classList.add('selected');
 }
 
-document.getElementById('customDetail').addEventListener('input', function(e) {
-  taleData.customDetail = e.target.value;
-  taleData.detail = '';
-  document.querySelectorAll('#step4 .option-card').forEach(c => c.classList.remove('selected'));
-});
+const customDetailInput = document.getElementById('customDetail');
+if (customDetailInput) {
+  customDetailInput.addEventListener('input', function(e) {
+    taleData.customDetail = e.target.value;
+    taleData.detail = '';
+    document.querySelectorAll('#step4 .option-card').forEach(c => c.classList.remove('selected'));
+  });
+}
 
 function nextStep() {
   if (currentStep === 1) {
