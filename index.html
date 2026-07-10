@@ -488,6 +488,405 @@ body.default-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
           <button class="btn btn-secondary" onclick="prevStep()">← Назад</button>
           <button class="btn btn-primary" onclick="nextStep()">Далее →</button>
         </div>
+      <!-- Шаг 4: Детали -->
+      <div class="step-content" id="step4">
+        <h2 class="step-title">Добавьте детали</h2>
+        <p class="step-description">Что особенного должно быть в сказке?</p>
+        <div class="options-grid">
+          <div class="option-card" onclick="selectDetail('talking_cat', this)">
+            <div class="option-icon">🐱</div>
+            <div class="option-title">Говорящий кот</div>
+            <div class="option-description">Мудрый спутник</div>
+          </div>
+          <div class="option-card" onclick="selectDetail('birthday', this)">
+            <div class="option-icon">🎂</div>
+            <div class="option-title">День рождения</div>
+            <div class="option-description">День чудес</div>
+          </div>
+          <div class="option-card" onclick="selectDetail('magic_sword', this)">
+            <div class="option-icon">⚔️</div>
+            <div class="option-title">Волшебный меч</div>
+            <div class="option-description">Для героя</div>
+          </div>
+        </div>
+        <div class="input-group" style="margin-top: 20px;">
+          <label>Или напишите своё пожелание</label>
+          <input type="text" id="customDetail" placeholder="Например: дракон">
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-secondary" onclick="prevStep()">← Назад</button>
+          <button class="btn btn-primary" onclick="nextStep()">Далее →</button>
+        </div>
+      </div><!-- Шаг 5: Стиль -->
+      <div class="step-content" id="step5">
+        <h2 class="step-title">Выберите стиль</h2>
+        <p class="step-description">Как должна звучать сказка?</p>
+        <div class="options-grid">
+          <div class="option-card" onclick="selectOption('style', 'grim', this)">
+            <div class="option-icon">🏰</div>
+            <div class="option-title">Классический</div>
+            <div class="option-description">Братья Гримм</div>
+          </div>
+          <div class="option-card" onclick="selectOption('style', 'andersen', this)">
+            <div class="option-icon">🌹</div>
+            <div class="option-title">Поэтичный</div>
+            <div class="option-description">Андерсен</div>
+          </div>
+          <div class="option-card" onclick="selectOption('style', 'perro', this)">
+            <div class="option-icon"></div>
+            <div class="option-title">Королевский</div>
+            <div class="option-description">Перро</div>
+          </div>
+          <div class="option-card" onclick="selectOption('style', 'pushkin', this)">
+            <div class="option-icon"></div>
+            <div class="option-title">Русский</div>
+            <div class="option-description">Пушкин</div>
+          </div>
+          <div class="option-card" onclick="selectOption('style', 'disney', this)">
+            <div class="option-icon"></div>
+            <div class="option-title">Современный</div>
+            <div class="option-description">Disney</div>
+          </div>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-secondary" onclick="prevStep()">← Назад</button>
+          <button class="btn btn-primary" onclick="nextStep()">Далее →</button>
+        </div>
       </div>
 
-      <!-- Шаг 4: Детали -->
+      <!-- Шаг 6: Финал -->
+      <div class="step-content" id="step6">
+        <h2 class="step-title">Как закончится сказка?</h2>
+        <p class="step-description">Выберите тип финала</p>
+        <div class="options-grid">
+          <div class="option-card" onclick="selectOption('ending', 'happy', this)">
+            <div class="option-icon">🌈</div>
+            <div class="option-title">Счастливый</div>
+            <div class="option-description">Долго и счастливо</div>
+          </div>
+          <div class="option-card" onclick="selectOption('ending', 'moral', this)">
+            <div class="option-icon"></div>
+            <div class="option-title">Поучительный</div>
+            <div class="option-description">Важная истина</div>
+          </div>
+          <div class="option-card" onclick="selectOption('ending', 'surprise', this)">
+            <div class="option-icon">🎁</div>
+            <div class="option-title">С сюрпризом</div>
+            <div class="option-description">Неожиданно</div>
+          </div>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-secondary" onclick="prevStep()">← Назад</button>
+          <button class="btn btn-primary" onclick="nextStep()">Далее →</button>
+        </div>
+      </div>
+
+      <!-- Шаг 7: Длина + API Key -->
+      <div class="step-content" id="step7">
+        <h2 class="step-title">Выберите длину</h2>
+        <p class="step-description">Сколько слов должно быть в сказке?</p>
+        <div class="options-grid">
+          <div class="option-card" onclick="selectOption('length', 'short', this)">
+            <div class="option-icon">📘</div>
+            <div class="option-title">Короткая</div>
+            <div class="option-description">~300 слов</div>
+          </div>
+          <div class="option-card" onclick="selectOption('length', 'medium', this)">
+            <div class="option-icon"></div>
+            <div class="option-title">Средняя</div>
+            <div class="option-description">~600 слов</div>
+          </div>
+          <div class="option-card" onclick="selectOption('length', 'long', this)">
+            <div class="option-icon"></div>
+            <div class="option-title">Длинная</div>
+            <div class="option-description">~900 слов</div>
+          </div>
+        </div>
+        <div class="input-group" style="margin-top: 20px;">
+          <label>🔑 API ключ OpenRouter</label>
+          <input type="password" id="apiKey" placeholder="sk-or-...">
+          <div style="font-size: 12px; color: #7f8c8d; margin-top: 8px;">
+            Получите ключ на <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a>
+          </div>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn btn-secondary" onclick="prevStep()">← Назад</button>
+          <button class="btn btn-primary" onclick="generateTale()">✨ Создать сказку</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Экран загрузки -->
+  <div class="screen" id="loadingScreen">
+    <div class="card loading-screen">
+      <div class="loading-animation">
+        <div class="loading-circle"></div>
+        <div class="loading-circle"></div>
+        <div class="loading-circle"></div>
+      </div>
+      <div class="loading-text" id="loadingText">Сочиняем сказку...</div>
+      <div class="loading-subtext">Это займёт около минуты</div>
+    </div>
+  </div>
+
+  <!-- Экран книги -->
+  <div class="screen" id="bookScreen">
+    <div class="book">
+      <div class="book-header">
+        <h1 class="book-title" id="bookTitle">Сказка</h1>
+        <div class="book-meta" id="bookMeta"></div>
+      </div>
+      <div class="book-content" id="bookContent"></div>
+    </div>
+    <div class="book-actions">
+      <button class="action-btn" onclick="createNewTale()">
+        <div class="action-icon">🔄</div>
+        <div class="action-label">Новая сказка</div>
+      </button>
+      <button class="action-btn" onclick="copyText()">
+        <div class="action-icon">📋</div>
+        <div class="action-label">Копировать текст</div>
+      </button>
+      <button class="action-btn" onclick="downloadText()">
+        <div class="action-icon"></div>
+        <div class="action-label">Скачать текст</div>
+      </button>
+      <button class="action-btn premium" onclick="downloadPDF()">
+        <div class="action-icon">📥</div>
+        <div class="action-label">Скачать PDF</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Экран подписки -->
+  <div class="screen" id="subscriptionScreen">
+    <div class="card subscription-screen">
+      <div class="subscription-title">Ваши бесплатные сказки закончились</div>
+      <div class="subscription-text">
+        Вы создали 3 сказки разной длины. Оформите подписку!
+      </div>
+      <div class="subscription-features">
+        <div class="feature-item">
+          <div class="feature-icon">📥</div>
+          <div>Скачивание PDF-книг</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">📚</div>
+          <div>Любая длина сказки</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">✨</div>
+          <div>Безлимитные сказки</div>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="subscribe()">Оформить подписку</button>
+      <button class="btn btn-secondary" onclick="goHome()">На главную</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let userData = { email: '', talesCreated: { short: 0, medium: 0, long: 0 } };
+let taleData = { heroName: '', heroAge: '', world: '', value: '', detail: '', customDetail: '', style: '', ending: '', length: '' };
+let currentStep = 1;
+
+function initStars() {
+  const starsContainer = document.getElementById('stars');
+  for (let i = 0; i < 50; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+    const size = Math.random() * 3 + 1;
+    star.style.width = size + 'px';
+    star.style.height = size + 'px';
+    star.style.animationDelay = Math.random() * 3 + 's';
+    starsContainer.appendChild(star);
+  }
+}
+
+function register() {
+  const email = document.getElementById('authEmail').value;
+  const password = document.getElementById('authPassword').value;
+  if (!email || !password) { alert('Пожалуйста, заполните все поля'); return; }
+  if (password.length < 6) { alert('Пароль должен содержать минимум 6 символов'); return; }
+  userData.email = email;
+  localStorage.setItem('skazochnik_user', JSON.stringify(userData));
+  showScreen('wizardScreen');
+}
+
+function loginWithGoogle() {
+  userData.email = 'user@gmail.com';
+  localStorage.setItem('skazochnik_user', JSON.stringify(userData));
+  showScreen('wizardScreen');
+}
+
+function loginWithVK() {
+  userData.email = 'user@vk.com';
+  localStorage.setItem('skazochnik_user', JSON.stringify(userData));
+  showScreen('wizardScreen');
+}
+
+function showScreen(screenId) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(screenId).classList.add('active');
+}
+
+function selectOption(category, value, element) {
+  taleData[category] = value;
+  const parent = element.parentElement;
+  parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+  element.classList.add('selected');
+  if (category === 'world') {
+    document.body.className = 'world-' + value;
+  }
+}
+
+function selectDetail(detail, element) {
+  taleData.detail = detail;
+  taleData.customDetail = '';
+  document.getElementById('customDetail').value = '';
+  const parent = element.parentElement;
+  parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+  element.classList.add('selected');
+}
+
+document.getElementById('customDetail').addEventListener('input', function(e) {
+  taleData.customDetail = e.target.value;
+  taleData.detail = '';
+  document.querySelectorAll('#step4 .option-card').forEach(c => c.classList.remove('selected'));
+});
+
+function nextStep() {
+  if (currentStep === 1) {
+    taleData.heroName = document.getElementById('heroName').value.trim();
+    taleData.heroAge = document.getElementById('heroAge').value.trim();
+    if (!taleData.heroName || !taleData.heroAge) { alert('Пожалуйста, заполните имя и возраст'); return; }
+  }
+  if (currentStep === 2 && !taleData.world) { alert('Пожалуйста, выберите мир'); return; }
+  if (currentStep === 3 && !taleData.value) { alert('Пожалуйста, выберите ценность'); return; }
+  if (currentStep === 5 && !taleData.style) { alert('Пожалуйста, выберите стиль'); return; }
+  if (currentStep === 6 && !taleData.ending) { alert('Пожалуйста, выберите финал'); return; }
+  if (currentStep === 7 && !taleData.length) { alert('Пожалуйста, выберите длину'); return; }
+  
+  if (currentStep < 7) {
+    document.getElementById('step' + currentStep).classList.remove('active');
+    currentStep++;
+    document.getElementById('step' + currentStep).classList.add('active');
+    updateProgressBar();
+  }
+}
+
+function prevStep() {
+  if (currentStep > 1) {
+    document.getElementById('step' + currentStep).classList.remove('active');
+    currentStep--;
+    document.getElementById('step' + currentStep).classList.add('active');
+    updateProgressBar();
+  }
+}
+
+function updateProgressBar() {
+  document.querySelectorAll('.progress-step').forEach((step, index) => {
+    step.classList.remove('active', 'completed');
+    if (index + 1 === currentStep) step.classList.add('active');
+    else if (index + 1 < currentStep) step.classList.add('completed');
+  });
+}
+
+async function generateTale() {
+  const apiKey = document.getElementById('apiKey').value.trim();
+  if (!apiKey) { alert('Пожалуйста, введите API ключ OpenRouter'); return; }
+  
+  const limits = { short: 1, medium: 1, long: 1 };
+  if (userData.talesCreated[taleData.length] >= limits[taleData.length]) {
+    showScreen('subscriptionScreen');
+    return;
+  }
+  
+  showScreen('loadingScreen');
+  
+  try {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+        'HTTP-Referer': window.location.href,
+        'X-Title': 'Skazochnik'
+      },
+      body: JSON.stringify({
+        model: 'qwen/qwen-2.5-7b-instruct',
+        messages: [{ role: 'user', content: 'Сказка про ' + taleData.heroName }],
+        temperature: 0.8,
+        max_tokens: 1000
+      })
+    });
+    
+    if (!response.ok) throw new Error('Ошибка API: ' + response.status);
+    
+    const data = await response.json();
+    const tale = data.choices[0].message.content;
+    
+    userData.talesCreated[taleData.length]++;
+    localStorage.setItem('skazochnik_user', JSON.stringify(userData));
+    
+    document.getElementById('bookTitle').textContent = 'Сказка про ' + taleData.heroName;
+    document.getElementById('bookContent').innerHTML = '<p>' + tale.replace(/\n/g, '</p><p>') + '</p>';
+    showScreen('bookScreen');
+    
+  } catch (error) {
+    alert('Ошибка: ' + error.message);
+    showScreen('wizardScreen');
+  }
+}
+
+function createNewTale() {
+  currentStep = 1;
+  taleData = { heroName: '', heroAge: '', world: '', value: '', detail: '', customDetail: '', style: '', ending: '', length: '' };
+  document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('heroName').value = '';
+  document.getElementById('heroAge').value = '';
+  document.getElementById('customDetail').value = '';
+  document.getElementById('apiKey').value = '';
+  document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
+  document.getElementById('step1').classList.add('active');
+  updateProgressBar();
+  document.body.className = 'default-bg';
+  showScreen('wizardScreen');
+}
+
+function copyText() {
+  const text = document.getElementById('bookContent').innerText;
+  navigator.clipboard.writeText(text).then(() => alert('Текст скопирован!'));
+}
+
+function downloadText() {
+  const text = document.getElementById('bookContent').innerText;
+  const blob = new Blob([text], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'Сказка про ' + taleData.heroName + '.txt';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function downloadPDF() { showScreen('subscriptionScreen'); }
+function subscribe() { alert('Подписка будет доступна скоро!'); }
+function goHome() { showScreen('wizardScreen'); }
+
+window.onload = function() {
+  initStars();
+  const savedUser = localStorage.getItem('skazochnik_user');
+  if (savedUser) {
+    userData = JSON.parse(savedUser);
+    showScreen('wizardScreen');
+  }
+};
+</script>
+
+</body>
+</html>
