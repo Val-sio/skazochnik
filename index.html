@@ -883,7 +883,7 @@ function downloadPDF() { showScreen('subscriptionScreen'); }
 function subscribe() { alert('Подписка будет доступна скоро!'); }
 function goHome() { showScreen('wizardScreen'); }
 
-window.onload = function() {
+window.onload = function() {alert('JavaScript работает!');
   initStars();
   const savedUser = localStorage.getItem('skazochnik_user');
   if (savedUser) {
